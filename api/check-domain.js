@@ -1,24 +1,14 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 8000;
-
-// 允许从任何源获取资源
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-});
-
-// 静态文件服务（因为你的文件都在根目录）
-app.use(express.static('.'));
 
 // 域名查询路由
-app.get('/check-domain', async (req, res) => {
+app.get('/api/check-domain', async (req, res) => {
     const domain = req.query.domain;
     if (!domain) {
         return res.status(400).json({ error: '请提供域名' });
     }
 
-    // 拆分域名为 name 和 suffix
+    // ... (保留原有的逻辑处理代码)
     const parts = domain.split('.');
     const name = parts[0];
     const suffix = parts.slice(1).join('.');
@@ -30,6 +20,7 @@ app.get('/check-domain', async (req, res) => {
         const whoisResponse = await fetch(`https://whois.freeaiapi.xyz/?name=${name}&suffix=${suffix}`);
         const whoisData = await whoisResponse.json();
 
+        // ... (保留原有的逻辑处理代码)
         if (whoisData.status === 'ok' && whoisData.available === false) {
             res.json({
                 isRegistered: true,
@@ -47,6 +38,4 @@ app.get('/check-domain', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;

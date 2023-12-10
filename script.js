@@ -3,7 +3,7 @@ document.getElementById('checkButton').addEventListener('click', function() {
     var resultDiv = document.getElementById('result'); // 确保在使用前定义了 resultDiv
 
     if (domain) {
-        fetch('/check-domain?domain=' + encodeURIComponent(domain))
+        fetch('/api/check-domain?domain=' + encodeURIComponent(domain))
             .then(response => response.json())
             .then(data => {
                 if (data.isRegistered) {
